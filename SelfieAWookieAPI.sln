@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfieAWookieAPI", "SelfieAWookieAPI\SelfieAWookieAPI.csproj", "{6F21BCF9-1025-4E89-BC46-779CD5D9AA57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsWebAPI", "TestsWebAPI\TestsWebAPI.csproj", "{65770A83-AC03-499F-92D0-7EEF0C00CC26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22FCA2B7-93A2-4F8A-A902-7C7F1F8AC6D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{6F21BCF9-1025-4E89-BC46-779CD5D9AA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F21BCF9-1025-4E89-BC46-779CD5D9AA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F21BCF9-1025-4E89-BC46-779CD5D9AA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65770A83-AC03-499F-92D0-7EEF0C00CC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65770A83-AC03-499F-92D0-7EEF0C00CC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65770A83-AC03-499F-92D0-7EEF0C00CC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65770A83-AC03-499F-92D0-7EEF0C00CC26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65770A83-AC03-499F-92D0-7EEF0C00CC26} = {22FCA2B7-93A2-4F8A-A902-7C7F1F8AC6D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08F01B73-951C-4A82-8D55-A368A66F4360}
