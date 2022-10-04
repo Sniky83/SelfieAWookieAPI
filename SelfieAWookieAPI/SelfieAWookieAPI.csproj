@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SelfieAWookie.Core.Domain\SelfieAWookie.Core.Selfies.Domain.csproj" />
+    <ProjectReference Include="..\SelfieAWookie.Core.Selfies.Infrastructures\SelfieAWookie.Core.Selfies.Infrastructures.csproj" />
+  </ItemGroup>
+
 </Project>
