@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using SelfieAWookieAPI.Controllers;
 
 namespace TestsWebAPI
@@ -9,14 +10,17 @@ namespace TestsWebAPI
         public void ShouldReturnListOfSelfies()
         {
             // Arrange
-            var controller = new SelfiesController();
+            var controller = new SelfiesController(null);
 
             // Act
             var result = controller.Get();
 
             // Assert
             Assert.NotNull(result);
-            Assert.True(result.GetEnumerator().MoveNext());
+            Assert.IsType<OkObjectResult>(result);
+
+            OkObjectResult okResult = result as OkObjectResult;
+            Assert.NotNull(okResult.Value);
         }
         #endregion
     }
