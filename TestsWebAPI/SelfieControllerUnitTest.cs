@@ -46,12 +46,12 @@ namespace TestsWebAPI
 
             var repositoryMock = new Mock<ISelfieRepository>();
 
-            repositoryMock.Setup(item => item.GetAll()).Returns(expectedList);
+            repositoryMock.Setup(item => item.GetAll(It.IsAny<int>())).Returns(expectedList);
 
             var controller = new SelfiesController(repositoryMock.Object);
 
             // Act
-            var result = controller.Get();
+            var result = controller.GetAll();
 
             // Assert
             Assert.NotNull(result);

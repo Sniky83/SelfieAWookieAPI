@@ -16,7 +16,7 @@ namespace SelfieAWookie.Core.Selfies.Domain
         /// Récupère tous les selfies
         /// </summary>
         /// <returns></returns>
-        ICollection<Selfie> GetAll();
+        ICollection<Selfie> GetAll(int wookieId);
         /// <summary>
         /// Ajoute un selfie en BDD
         /// </summary>

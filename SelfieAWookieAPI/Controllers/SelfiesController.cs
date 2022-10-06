@@ -32,7 +32,7 @@ namespace SelfieAWookieAPI.Controllers
         //    return Enumerable.Range(1, 10).Select(item => new Selfie() { Id = item });
         //}
 
-        public IActionResult Get()
+        public IActionResult GetAll([FromQuery] int wookieId = 0)
         {
             //var model = Enumerable.Range(1, 10).Select(item => new Selfie() { Id = item });
 
@@ -46,8 +46,9 @@ namespace SelfieAWookieAPI.Controllers
             //            on Selfie.WookieId equals wookie.Id
             //            select Selfie;
 
-            var selfieList = _repository.GetAll();
+            //var param = Request.Query["wookieId"];
 
+            var selfieList = _repository.GetAll(wookieId);
             var model = selfieList.Select(item => new SelfieResumeDto { Title = item.Title, WookieId = item.WookieId, NbSelfiesFromWookie = (item.Wookie?.Selfies?.Count).GetValueOrDefault(0) }).ToList();
 
             return Ok(model);
