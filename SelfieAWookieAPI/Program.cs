@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
+using SelfieAWookie.Core.Selfies.Infrastructures.Repositories;
+using SelfieAWookieAPI.ExtensionMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,18 @@ builder.Services.AddDbContext<SelfiesContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SelfiesDatabase"), sqlOptions => {});
 });
+
+//Injection de dépendance
+//S'il repère un param avec le type "interface" il injecte la "classe" virtuellement.
+//builder.Services.AddTransient<ISelfieRepository, DefaultSelfieRepository>();
+
+//builder.Services.AddScoped<ISelfieRepository, DefaultSelfieRepository>();
+
+//Instancie la classe au démarrage puis la garde en mémoire pour la réutiliser
+//Pas forcément bien
+//builder.Services.AddSingleton(typeof(DefaultSelfieRepository));
+
+builder.Services.AddInjections();
 
 var app = builder.Build();
 

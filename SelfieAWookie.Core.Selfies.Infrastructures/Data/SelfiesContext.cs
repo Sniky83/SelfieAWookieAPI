@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data.TypeConfigurations;
+using SelfiesAWookies.Core.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SelfieAWookie.Core.Selfies.Infrastructures.Data
 {
-    public class SelfiesContext : DbContext
+    public class SelfiesContext : DbContext, IUnitOfWork
     {
         #region Constructors
         public SelfiesContext([NotNullAttribute] DbContextOptions options) : base(options) { }
