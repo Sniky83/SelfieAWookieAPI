@@ -23,5 +23,12 @@ namespace SelfieAWookie.Core.Selfies.Domain
         /// <param name="item"></param>
         /// <returns></returns>
         Selfie AddOne(Selfie item);
+        /// <summary>
+        /// Créer une nouvelle photo
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        Picture AddOnePicture(string url);
+        //Picture AddOnePicture(int selfieId, string url);
     }
 }

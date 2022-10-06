@@ -32,6 +32,7 @@ namespace SelfieAWookie.Core.Selfies.Infrastructures.Data
         #region Properties
         public DbSet<Selfie> Selfies { get; set; }
         public DbSet<Wookie> Wookies { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
         #endregion
     }
 }
