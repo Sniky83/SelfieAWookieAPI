@@ -9,5 +9,6 @@ Pour effectuer une migration :
 - Puis tapez : dotnet ef database update --startup-project . --project=..\SelfieAWookie.Core.Selfies.Data.Migrations
 
 - Si vous souhaitez ajouter une nouvelle version de migration tapez : dotnet ef migrations add NewTableExample --startup-project . --project=..\SelfieAWookie.Core.Selfies.Data.Migrations
+- Régénerez le projet "Migrations" puis réexectuez une update
 
 ça y est la BDD à été migrée !
