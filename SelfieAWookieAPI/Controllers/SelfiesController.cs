@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 using SelfieAWookieAPI.Application.DTOs;
+using SelfieAWookieAPI.ExtensionMethods;
 
 namespace SelfieAWookieAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    //On spécifie une POLICY rien qui pour ce controller
+    //Va override la config du Program.cs pour prendre celle la car c'est spécific a ce controller
+    [EnableCors(SecurityMethods.DEFAULT_POLICY_2)]
     public class SelfiesController : ControllerBase
     {
         #region Fields
@@ -28,12 +33,17 @@ namespace SelfieAWookieAPI.Controllers
         #endregion
 
         #region Public Methods
-        [HttpGet]
+        //[HttpGet]
         //public IEnumerable<Selfie> Get()
         //{
         //    return Enumerable.Range(1, 10).Select(item => new Selfie() { Id = item });
         //}
 
+        [HttpGet]
+        //Fait sauter la règle du controller ou du Program.cs pour cette requête specifique
+        [DisableCors()]
+        //Override le CORS du controller car spécific a cette méthode
+        //[EnableCors(SecurityMethods.DEFAULT_POLICY_3)]
         public IActionResult GetAll([FromQuery] int wookieId = 0)
         {
             //var model = Enumerable.Range(1, 10).Select(item => new Selfie() { Id = item });

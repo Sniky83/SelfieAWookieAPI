@@ -13,6 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCustomSecurity(builder.Configuration);
+
 builder.Services.AddDbContext<SelfiesContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SelfiesDatabase"), sqlOptions => {});
@@ -31,6 +33,9 @@ builder.Services.AddDbContext<SelfiesContext>(options =>
 builder.Services.AddInjections();
 
 var app = builder.Build();
+
+//On blinde toute l'API sur cette POLICY
+app.UseCors(SecurityMethods.DEFAULT_POLICY);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
