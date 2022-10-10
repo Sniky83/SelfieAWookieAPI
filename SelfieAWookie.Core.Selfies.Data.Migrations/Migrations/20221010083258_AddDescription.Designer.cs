@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 
@@ -10,9 +11,10 @@ using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 namespace SelfieAWookie.Core.Selfies.Data.Migrations.Migrations
 {
     [DbContext(typeof(SelfiesContext))]
-    partial class SelfiesContextModelSnapshot : ModelSnapshot
+    [Migration("20221010083258_AddDescription")]
+    partial class AddDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +47,9 @@ namespace SelfieAWookie.Core.Selfies.Data.Migrations.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
