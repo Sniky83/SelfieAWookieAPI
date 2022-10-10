@@ -12,7 +12,7 @@ using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 namespace SelfieAWookie.Core.Selfies.Data.Migrations.Migrations
 {
     [DbContext(typeof(SelfiesContext))]
-    [Migration("20221010083537_AddCreationDate")]
+    [Migration("20221010090255_AddCreationDate")]
     partial class AddCreationDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

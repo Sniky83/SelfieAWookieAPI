@@ -11,8 +11,8 @@ using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 namespace SelfieAWookie.Core.Selfies.Data.Migrations.Migrations
 {
     [DbContext(typeof(SelfiesContext))]
-    [Migration("20221007140313_InitDatabase")]
-    partial class InitDatabase
+    [Migration("20221010090002_DeleteCreationDate")]
+    partial class DeleteCreationDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,9 @@ namespace SelfieAWookie.Core.Selfies.Data.Migrations.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
