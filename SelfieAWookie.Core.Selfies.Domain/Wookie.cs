@@ -10,6 +10,7 @@ namespace SelfieAWookie.Core.Selfies.Domain
     public class Wookie
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public List<Selfie>? Selfies { get; set; }
     }
 }

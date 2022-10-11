@@ -100,7 +100,7 @@ namespace SelfieAWookieAPI.Controllers
             }),
                 // the life span of the token needs to be shorter and utilise refresh token to keep the user signedin
                 // but since this is a demo app we can extend it to fit our current need
-                Expires = DateTime.UtcNow.AddHours(9),
+                Expires = DateTime.UtcNow.AddHours(10),
                 // here we are adding the encryption alogorithim information which will be used to decrypt our token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
