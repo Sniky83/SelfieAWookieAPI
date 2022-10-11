@@ -18,6 +18,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "IIS Express Staging": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "Jwt__Key": "ThisIsAP@$$W0rD!",
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      }
+    },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
