@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SelfieAWookie.Core.Selfies.Infrastructures.Configurations;
 using System.Text;
 
 namespace SelfieAWookieAPI.ExtensionMethods
@@ -32,6 +35,9 @@ namespace SelfieAWookieAPI.ExtensionMethods
         }
         public static void AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            SecurityOption securityOption = new SecurityOption();
+            configuration.GetSection("Jwt").Bind(securityOption);
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -39,7 +45,7 @@ namespace SelfieAWookieAPI.ExtensionMethods
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                string maClef = configuration["Jwt:Key"];
+                string maClef = securityOption.Key;
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
@@ -54,23 +60,26 @@ namespace SelfieAWookieAPI.ExtensionMethods
 
         public static void AddCustomCors(this CorsOptions options, IConfiguration configuration)
         {
+            CorsOption corsOption = new CorsOption();
+            configuration.GetSection("Cors").Bind(corsOption);
+
             options.AddPolicy(DEFAULT_POLICY, builder =>
             {
-                builder.WithOrigins(configuration["Cors:Origin"])
+                builder.WithOrigins(corsOption.Origin)
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
 
             options.AddPolicy(DEFAULT_POLICY_2, builder =>
             {
-                builder.WithOrigins(configuration["Cors:Origin2"])
+                builder.WithOrigins(corsOption.Origin2)
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
 
             options.AddPolicy(DEFAULT_POLICY_3, builder =>
             {
-                builder.WithOrigins(configuration["Cors:Origin3"])
+                builder.WithOrigins(corsOption.Origin3)
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });

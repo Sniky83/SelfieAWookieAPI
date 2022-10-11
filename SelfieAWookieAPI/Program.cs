@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCustomOptions(builder.Configuration);
 builder.Services.AddCustomSecurity(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
