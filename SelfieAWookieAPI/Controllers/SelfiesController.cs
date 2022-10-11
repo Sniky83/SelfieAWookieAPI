@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,8 @@ namespace SelfieAWookieAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    //Si token alors on accepte (lié au JWT)
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //On spécifie une POLICY rien qui pour ce controller
     //Va override la config du Program.cs pour prendre celle la car c'est spécific a ce controller
     [EnableCors(SecurityMethods.DEFAULT_POLICY_2)]

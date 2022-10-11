@@ -15,6 +15,8 @@ namespace SelfieAWookie.Core.Selfies.Infrastructures.Data.TypeConfigurations
         public void Configure(EntityTypeBuilder<Wookie> builder)
         {
             builder.ToTable("Wookie");
+
+            builder.HasKey(x => x.Id);
         }
         #endregion
     }

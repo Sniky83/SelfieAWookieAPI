@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
@@ -14,6 +15,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCustomSecurity(builder.Configuration);
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = true;
+}).AddEntityFrameworkStores<SelfiesContext>();
 
 builder.Services.AddDbContext<SelfiesContext>(options =>
 {
@@ -34,9 +40,6 @@ builder.Services.AddInjections();
 
 var app = builder.Build();
 
-//On blinde toute l'API sur cette POLICY
-app.UseCors(SecurityMethods.DEFAULT_POLICY);
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -46,6 +49,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//On blinde toute l'API sur cette POLICY
+app.UseCors(SecurityMethods.DEFAULT_POLICY);
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
