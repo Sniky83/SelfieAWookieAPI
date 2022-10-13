@@ -5,6 +5,7 @@ using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 using SelfieAWookie.Core.Selfies.Infrastructures.Loggers;
 using SelfieAWookie.Core.Selfies.Infrastructures.Repositories;
 using SelfieAWookieAPI.ExtensionMethods;
+using SelfieAWookieAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<LogRequestMiddleware>();
 
 app.UseHttpsRedirection();
 
