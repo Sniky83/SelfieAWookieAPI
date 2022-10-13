@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
+using SelfieAWookieAPI.Application.Commands;
 using SelfieAWookieAPI.Application.DTOs;
 using SelfieAWookieAPI.Application.Queries;
 using SelfieAWookieAPI.ExtensionMethods;
@@ -68,6 +69,7 @@ namespace SelfieAWookieAPI.Controllers
 
             //var param = Request.Query["wookieId"];
 
+            //Plus utilisé ici depuis la maj avec la partie Query de l'architecture CQRS
             //var selfieList = _repository.GetAll(wookieId);
             //var model = selfieList.Select(item => new SelfieResumeDto { Title = item.Title, WookieId = item.WookieId, NbSelfiesFromWookie = (item.Wookie?.Selfies?.Count).GetValueOrDefault(0) }).ToList();
 
@@ -110,21 +112,29 @@ namespace SelfieAWookieAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddOne(SelfieDto dto)
+        public async Task<IActionResult> AddOne(SelfieDto dto)
         {
             IActionResult result = BadRequest();
 
-            Selfie addSelfie = _repository.AddOne(new Selfie()
-            {
-                ImagePath = dto.ImagePath,
-                Title = dto.Title
-            });
-            _repository.UnitOfWork.SaveChanges();
+            //Partie commande gérée avec le pattern Mediator couplé a l'architecture CQRS
+            //Selfie addSelfie = _repository.AddOne(new Selfie()
+            //{
+            //    ImagePath = dto.ImagePath,
+            //    Title = dto.Title
+            //});
+            //_repository.UnitOfWork.SaveChanges();
 
-            if(addSelfie != null)
+            //if(addSelfie != null)
+            //{
+            //    dto.Id = addSelfie.Id;
+            //    result = Ok(dto);
+            //}
+
+            var item = await _mediator.Send(new AddSelfieCommand() { Item = dto });
+
+            if(item != null)
             {
-                dto.Id = addSelfie.Id;
-                result = Ok(dto);
+                result = Ok(item);
             }
 
             return Ok(result);
