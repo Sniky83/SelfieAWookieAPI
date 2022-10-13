@@ -24,6 +24,8 @@ namespace SelfieAWookieAPI.Application.Commands
 
             Selfie addSelfie = _repository.AddOne(new Selfie()
             {
+                WookieId = 1,
+                PictureId = 1,
                 ImagePath = request.Item.ImagePath,
                 Title = request.Item.Title
             });
