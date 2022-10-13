@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SelfieAWookie.Core.Selfies.Domain;
@@ -16,13 +17,14 @@ namespace TestsWebAPI
             // Arrange
             SelfieDto selfie = new SelfieDto();
             var repositoryMock = new Mock<ISelfieRepository>();
+            var hostEnvironment = new Mock<IWebHostEnvironment>();
             var unit = new Mock<IUnitOfWork>().Object;
 
-            repositoryMock.Setup(item => item.UnitOfWork).Returns(new Mock<IUnitOfWork>().Object);
+            repositoryMock.Setup(item => item.UnitOfWork).Returns(unit);
             repositoryMock.Setup(item => item.AddOne(It.IsAny<Selfie>())).Returns(new Selfie() { Id = 4 });
 
             // Act
-            var controller = new SelfiesController(repositoryMock.Object);
+            var controller = new SelfiesController(repositoryMock.Object, hostEnvironment.Object);
             var result = controller.AddOne(selfie);
 
             // Assert
@@ -45,10 +47,11 @@ namespace TestsWebAPI
             };
 
             var repositoryMock = new Mock<ISelfieRepository>();
+            var hostEnvironment = new Mock<IWebHostEnvironment>();
 
             repositoryMock.Setup(item => item.GetAll(It.IsAny<int>())).Returns(expectedList);
 
-            var controller = new SelfiesController(repositoryMock.Object);
+            var controller = new SelfiesController(repositoryMock.Object, hostEnvironment.Object);
 
             // Act
             var result = controller.GetAll();
