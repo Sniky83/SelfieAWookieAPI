@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
 using SelfieAWookieAPI.Application.DTOs;
+using SelfieAWookieAPI.Application.Queries;
 using SelfieAWookieAPI.ExtensionMethods;
 
 namespace SelfieAWookieAPI.Controllers
@@ -26,13 +28,15 @@ namespace SelfieAWookieAPI.Controllers
         //Injection de dépendance
         private readonly ISelfieRepository _repository = null;
         private readonly IWebHostEnvironment _webHostEnvironment = null;
+        private readonly IMediator _mediator = null;
         #endregion
 
         #region Constructors
-        public SelfiesController(ISelfieRepository repository, IWebHostEnvironment webHostEnvironment)
+        public SelfiesController(IMediator mediator, ISelfieRepository repository, IWebHostEnvironment webHostEnvironment)
         {
             _repository = repository;
             _webHostEnvironment = webHostEnvironment;
+            _mediator = mediator;
         }
         #endregion
 
@@ -64,8 +68,10 @@ namespace SelfieAWookieAPI.Controllers
 
             //var param = Request.Query["wookieId"];
 
-            var selfieList = _repository.GetAll(wookieId);
-            var model = selfieList.Select(item => new SelfieResumeDto { Title = item.Title, WookieId = item.WookieId, NbSelfiesFromWookie = (item.Wookie?.Selfies?.Count).GetValueOrDefault(0) }).ToList();
+            //var selfieList = _repository.GetAll(wookieId);
+            //var model = selfieList.Select(item => new SelfieResumeDto { Title = item.Title, WookieId = item.WookieId, NbSelfiesFromWookie = (item.Wookie?.Selfies?.Count).GetValueOrDefault(0) }).ToList();
+
+            var model = _mediator.Send(new SelectAllSelfiesQuery() { WookieId = wookieId });
 
             return Ok(model);
         }

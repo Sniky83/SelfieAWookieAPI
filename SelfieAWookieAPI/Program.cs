@@ -17,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCustomOptions(builder.Configuration);
+builder.Services.AddInjections();
 builder.Services.AddCustomSecurity(builder.Configuration);
 
 builder.Logging.AddProvider(new CustomLoggerProvider());
@@ -40,8 +41,6 @@ builder.Services.AddDbContext<SelfiesContext>(options =>
 //Instancie la classe au démarrage puis la garde en mémoire pour la réutiliser
 //Pas forcément bien
 //builder.Services.AddSingleton(typeof(DefaultSelfieRepository));
-
-builder.Services.AddInjections();
 
 var app = builder.Build();
 
