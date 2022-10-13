@@ -174,11 +174,26 @@
 		{
 			"name": "Should add one selfie",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwtToken}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 0,\r\n  \"imagePath\": \"chemin\",\r\n  \"title\": \"hey\"\r\n}"
+					"raw": "{\r\n  \"id\": 1,\r\n  \"imagePath\": \"chemin\",\r\n  \"title\": \"hey\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "https://localhost:44350/api/v1/Selfies",
