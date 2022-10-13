@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SelfieAWookie.Core.Selfies.Domain;
 using SelfieAWookie.Core.Selfies.Infrastructures.Data;
+using SelfieAWookie.Core.Selfies.Infrastructures.Loggers;
 using SelfieAWookie.Core.Selfies.Infrastructures.Repositories;
 using SelfieAWookieAPI.ExtensionMethods;
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCustomOptions(builder.Configuration);
 builder.Services.AddCustomSecurity(builder.Configuration);
+
+builder.Logging.AddProvider(new CustomLoggerProvider());
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {

@@ -20,14 +20,18 @@ namespace SelfieAWookieAPI.Controllers
         private readonly SecurityOption _options = null;
         private readonly UserManager<IdentityUser> _userManager = null;
         private readonly IConfiguration _configuration = null;
+        private readonly ILogger<AuthenticateController> _logger = null;
         #endregion
 
         #region Constructors
-        public AuthenticateController(UserManager<IdentityUser> userManager, IConfiguration configuration, IOptions<SecurityOption> options)
+        public AuthenticateController(ILogger<AuthenticateController> logger, UserManager<IdentityUser> userManager, IConfiguration configuration, IOptions<SecurityOption> options)
         {
             _userManager = userManager;
             _configuration = configuration;
             _options = options.Value;
+            _logger = logger;
+
+            _logger.LogDebug("Test log dans le constructeur !!!");
         }
         #endregion
 
@@ -53,25 +57,38 @@ namespace SelfieAWookieAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] AuthenticateUserDto dtoUser)
         {
             IActionResult result = BadRequest();
 
-            var user = await _userManager.FindByEmailAsync(dtoUser.Login);
-
-            if (user != null)
+            try
             {
-                var verif = await _userManager.CheckPasswordAsync(user, dtoUser.Password);
+                //throw new Exception();
 
-                if (verif)
+                var user = await _userManager.FindByEmailAsync(dtoUser.Login);
+
+                if (user != null)
                 {
-                    result = Ok(new AuthenticateUserDto()
+                    var verif = await _userManager.CheckPasswordAsync(user, dtoUser.Password);
+
+                    if (verif)
                     {
-                        Login = user.Email,
-                        Name = user.UserName,
-                        Token = GenerateJwtToken(user)
-                    });
+                        result = Ok(new AuthenticateUserDto()
+                        {
+                            Login = user.Email,
+                            Name = user.UserName,
+                            Token = GenerateJwtToken(user)
+                        });
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Login" + "\n" + ex + "\n" + dtoUser);
+                result = Problem("Cannot log");
             }
 
             return result;
