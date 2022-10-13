@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "a98d7dfb-efaf-405c-8df4-115e55280c47",
+		"name": "SelfieAWookie.API.Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16549923"
+	},
+	"item": [
+		{
+			"name": "Should Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"sniky3@gmail.com\",\r\n  \"password\": \"123abC!\",\r\n  \"name\": \"sniky3\",\r\n  \"token\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44350/api/v1/Authenticate/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44350",
+					"path": [
+						"api",
+						"v1",
+						"Authenticate",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"jwtToken\", result.token);\r",
+							"\r",
+							"postman.setNextRequest(\"Get all selfies\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"sniky3@gmail.com\",\r\n  \"password\": \"123abC!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44350/api/v1/Authenticate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44350",
+					"path": [
+						"api",
+						"v1",
+						"Authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all selfies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result = pm.response.json();\r",
+							"\r",
+							"console.log('result ???', result);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwtToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44350/api/v1/Selfies",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44350",
+					"path": [
+						"api",
+						"v1",
+						"Selfies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should add one picture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "picture",
+							"type": "file",
+							"src": "/C:/Users/lherve/Desktop/Capture.PNG"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44350/api/v1/Selfies/photos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44350",
+					"path": [
+						"api",
+						"v1",
+						"Selfies",
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Should add one selfie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"imagePath\": \"chemin\",\r\n  \"title\": \"hey\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44350/api/v1/Selfies",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44350",
+					"path": [
+						"api",
+						"v1",
+						"Selfies"
+					],
+					"query": [
+						{
+							"key": "imagePath",
+							"value": "yow",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "hey",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
